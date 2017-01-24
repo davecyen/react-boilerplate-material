@@ -13,11 +13,13 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import RaisedButton from 'material-ui/RaisedButton';
+import AppBar from 'components/AppBar';
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
+        <AppBar />
         <h1>
           <FormattedMessage {...messages.header} />
         </h1>
