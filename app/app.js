@@ -14,16 +14,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import FontFaceObserver from 'fontfaceobserver';
 import { useScroll } from 'react-router-scroll';
 import 'sanitize.css/sanitize.css';
-
-import injectTapEventPlugin from 'react-tap-event-plugin';
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 // Import root app
 import App from 'containers/App';
@@ -35,11 +27,11 @@ import { makeSelectLocationState } from 'containers/App/selectors';
 import LanguageProvider from 'containers/LanguageProvider';
 
 // Load the favicon, the manifest.json file and the .htaccess file
-/* eslint-disable import/no-webpack-loader-syntax */
+/* eslint-disable import/no-unresolved, import/extensions */
 import '!file-loader?name=[name].[ext]!./favicon.ico';
 import '!file-loader?name=[name].[ext]!./manifest.json';
-import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line import/extensions
-/* eslint-enable import/no-webpack-loader-syntax */
+import 'file-loader?name=[name].[ext]!./.htaccess';
+/* eslint-enable import/no-unresolved, import/extensions */
 
 import configureStore from './store';
 
@@ -49,20 +41,8 @@ import { translationMessages } from './i18n';
 // Import CSS reset and Global Styles
 import './global-styles';
 
-// Import routes
+// Import root routes
 import createRoutes from './routes';
-
-// Observe loading of Roboto (to remove Roboto, remove the <link> tag in
-// the index.html file and this observer)
-// const openSansObserver = new FontFaceObserver('Open Sans', {});
-const robotoObserver = new FontFaceObserver('Roboto', {});
-
-// When Roboto is loaded, add a font-family using Open Sans to the body
-robotoObserver.load().then(() => {
-  document.body.classList.add('fontLoaded');
-}, () => {
-  document.body.classList.remove('fontLoaded');
-});
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
@@ -84,42 +64,21 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
-// const render = (messages) => {
-//   ReactDOM.render(
-//     <Provider store={store}>
-//       <LanguageProvider messages={messages}>
-//         <Router
-//           history={history}
-//           routes={rootRoute}
-//           render={
-//             // Scroll to top when going to a new page, imitating default browser
-//             // behaviour
-//             applyRouterMiddleware(useScroll())
-//           }
-//         />
-//       </LanguageProvider>
-//     </Provider>,
-//     document.getElementById('app')
-//   );
-// };
-
 const render = (messages) => {
   ReactDOM.render(
-    <MuiThemeProvider>
-      <Provider store={store}>
-        <LanguageProvider messages={messages}>
-          <Router
-            history={history}
-            routes={rootRoute}
-            render={
-              // Scroll to top when going to a new page, imitating default browser
-              // behaviour
-              applyRouterMiddleware(useScroll())
-            }
-          />
-        </LanguageProvider>
-      </Provider>
-    </MuiThemeProvider>,
+    <Provider store={store}>
+      <LanguageProvider messages={messages}>
+        <Router
+          history={history}
+          routes={rootRoute}
+          render={
+            // Scroll to top when going to a new page, imitating default browser
+            // behaviour
+            applyRouterMiddleware(useScroll())
+          }
+        />
+      </LanguageProvider>
+    </Provider>,
     document.getElementById('app')
   );
 };
@@ -140,7 +99,6 @@ if (!window.Intl) {
   }))
     .then(() => Promise.all([
       import('intl/locale-data/jsonp/en.js'),
-      import('intl/locale-data/jsonp/de.js'),
     ]))
     .then(() => render(translationMessages))
     .catch((err) => {
