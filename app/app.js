@@ -18,6 +18,13 @@ import FontFaceObserver from 'fontfaceobserver';
 import { useScroll } from 'react-router-scroll';
 import 'sanitize.css/sanitize.css';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 // Import root app
 import App from 'containers/App';
 
@@ -45,12 +52,13 @@ import './global-styles';
 // Import routes
 import createRoutes from './routes';
 
-// Observe loading of Open Sans (to remove open sans, remove the <link> tag in
+// Observe loading of Roboto (to remove Roboto, remove the <link> tag in
 // the index.html file and this observer)
-const openSansObserver = new FontFaceObserver('Open Sans', {});
+// const openSansObserver = new FontFaceObserver('Open Sans', {});
+const robotoObserver = new FontFaceObserver('Roboto', {});
 
-// When Open Sans is loaded, add a font-family using Open Sans to the body
-openSansObserver.load().then(() => {
+// When Roboto is loaded, add a font-family using Open Sans to the body
+robotoObserver.load().then(() => {
   document.body.classList.add('fontLoaded');
 }, () => {
   document.body.classList.remove('fontLoaded');
@@ -76,21 +84,42 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
+// const render = (messages) => {
+//   ReactDOM.render(
+//     <Provider store={store}>
+//       <LanguageProvider messages={messages}>
+//         <Router
+//           history={history}
+//           routes={rootRoute}
+//           render={
+//             // Scroll to top when going to a new page, imitating default browser
+//             // behaviour
+//             applyRouterMiddleware(useScroll())
+//           }
+//         />
+//       </LanguageProvider>
+//     </Provider>,
+//     document.getElementById('app')
+//   );
+// };
+
 const render = (messages) => {
   ReactDOM.render(
-    <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <Router
-          history={history}
-          routes={rootRoute}
-          render={
-            // Scroll to top when going to a new page, imitating default browser
-            // behaviour
-            applyRouterMiddleware(useScroll())
-          }
-        />
-      </LanguageProvider>
-    </Provider>,
+    <MuiThemeProvider>
+      <Provider store={store}>
+        <LanguageProvider messages={messages}>
+          <Router
+            history={history}
+            routes={rootRoute}
+            render={
+              // Scroll to top when going to a new page, imitating default browser
+              // behaviour
+              applyRouterMiddleware(useScroll())
+            }
+          />
+        </LanguageProvider>
+      </Provider>
+    </MuiThemeProvider>,
     document.getElementById('app')
   );
 };
