@@ -1,16 +1,28 @@
 import React from 'react';
-import styled from 'styled-components';
-import AppBar from 'material-ui/AppBar';
+import { Drawer, AppBar, MenuItem } from 'material-ui';
 
-/**
- * A simple example of `AppBar` with an icon on the right.
- * By default, the left icon is a navigation-menu.
- */
-const AppBarExample = () => (
-  <AppBar
-    title="New App"
-    iconClassNameRight="muidocs-icon-navigation-expand-more"
-  />
-);
+export default class AppBarExample extends React.Component {
 
-export default AppBarExample;
+  constructor(props) {
+    super(props);
+    this.state = { open: false };
+  }
+
+  handleToggle = () => this.setState({ open: !this.state.open });
+  handleClose = () => this.setState({ open: false });
+
+  render() {
+    return (
+      <div>
+        <AppBar
+          title="New App"
+          onLeftIconButtonTouchTap={this.handleToggle}
+        />
+        <Drawer docked={false} open={this.state.open} onRequestChange={(open) => this.setState({ open })}>
+          <MenuItem onTouchTap={this.handleClose}>Menu Item</MenuItem>
+          <MenuItem onTouchTap={this.handleClose}>Menu Item 2</MenuItem>
+        </Drawer>
+      </div>
+    );
+  }
+}
