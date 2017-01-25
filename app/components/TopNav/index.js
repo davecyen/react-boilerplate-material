@@ -1,7 +1,7 @@
 import React from 'react';
 import { Drawer, AppBar, MenuItem } from 'material-ui';
 
-export default class AppBarExample extends React.Component {
+export default class TopNav extends React.Component {
 
   constructor(props) {
     super(props);
