@@ -14,6 +14,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import FontFaceObserver from 'fontfaceobserver';
 import { useScroll } from 'react-router-scroll';
 import 'sanitize.css/sanitize.css';
 
@@ -48,6 +49,17 @@ import './global-styles';
 
 // Import root routes
 import createRoutes from './routes';
+
+// Observe loading of Roboto (to remove ROboto, remove the <link> tag in
+// the index.html file and this observer)
+const robotoObserver = new FontFaceObserver('Roboto', {});
+
+// When Roboto is loaded, add a font-family using Roboto to the body
+robotoObserver.load().then(() => {
+  document.body.classList.add('fontLoaded');
+}, () => {
+  document.body.classList.remove('fontLoaded');
+});
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
