@@ -11,9 +11,9 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import TopNav from 'components/TopNav';
 import messages from './messages';
-import RaisedButton from 'material-ui/RaisedButton';
-import TopNav from 'components/AppBar';
+
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -23,13 +23,6 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
         <h1>
           <FormattedMessage {...messages.header} />
         </h1>
-        <RaisedButton
-          disabled={false}
-          label="Material-UI Raised Button"
-          labelPosition="after"
-          primary={true}
-          secondary={false}
-        />
       </div>
     );
   }
