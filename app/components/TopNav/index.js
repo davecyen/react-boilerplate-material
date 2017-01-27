@@ -1,5 +1,6 @@
 import React from 'react';
-import { Drawer, AppBar, MenuItem } from 'material-ui';
+import { Drawer, MenuItem } from 'material-ui';
+import StyledAppBar from './StyledAppBar';
 
 export default class TopNav extends React.Component {
 
@@ -14,13 +15,14 @@ export default class TopNav extends React.Component {
   render() {
     return (
       <div>
-        <AppBar
+        <StyledAppBar
           title="New App"
           onLeftIconButtonTouchTap={this.handleToggle}
         />
         <Drawer docked={false} open={this.state.open} onRequestChange={(open) => this.setState({ open })}>
-          <MenuItem onTouchTap={this.handleClose}>Menu Item</MenuItem>
-          <MenuItem onTouchTap={this.handleClose}>Menu Item 2</MenuItem>
+          <MenuItem onTouchTap={this.handleClose}>Home</MenuItem>
+          <MenuItem onTouchTap={this.handleClose}>Requests</MenuItem>
+          <MenuItem onTouchTap={this.handleClose}>Sign out</MenuItem>
         </Drawer>
       </div>
     );
