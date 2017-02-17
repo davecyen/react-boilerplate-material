@@ -1,6 +1,7 @@
 import React from 'react';
 import { Drawer, MenuItem, Divider } from 'material-ui';
-import StyledAppBar from './StyledAppBar';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
 
 export default class TopNav extends React.Component {
 
@@ -15,11 +16,26 @@ export default class TopNav extends React.Component {
   render() {
     return (
       <div>
-        <StyledAppBar
-          title="New App"
-          onLeftIconButtonTouchTap={this.handleToggle}
+        <AppBar
+          title="Roomblocker"
+          onRightIconButtonTouchTap={this.handleToggle}
+          iconElementRight={
+            <IconButton>
+              <i className="material-icons md-24">menu</i>
+            </IconButton>
+          }
+          style={{
+            backgroundColor: '#2d353f',
+            boxShadow: 'none',
+            fontFamily: 'Roboto, sans-serif',
+          }}
+          showMenuIconButton={false}
         />
-        <Drawer docked={false} open={this.state.open} onRequestChange={(open) => this.setState({ open })}>
+      <Drawer
+        docked={false}
+        open={this.state.open}
+        openSecondary={true}
+        onRequestChange={(open) => this.setState({ open })}>
           <MenuItem onTouchTap={this.handleClose}>
             Home
           </MenuItem>
