@@ -10,36 +10,30 @@
  */
 
 import React from 'react';
+import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import TopNav from 'components/TopNav';
 import messages from './messages';
-import styled from 'styled-components';
-
-const Hero = styled.div`
-  background-color: #2d353f;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  color: #fff;
-  width: 100%;
-  display: inline-block;
-  text-align: center;
-`;
 
 export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const AppContent = styled.div`
+      -moz-transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      -o-transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      -webkit-transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      background-color: red;
+      display: inline-block;
+      width: 100%;
+    `;
     return (
       <div>
         <TopNav />
-        <Hero>
-          <h1
-            style={{
-              fontWeight: 100
-            }}>
-            Book hotels for groups and events
+        <AppContent>
+          <h1>
+            <FormattedMessage {...messages.header} />
           </h1>
-        </Hero>
+        </AppContent>
       </div>
     );
   }
