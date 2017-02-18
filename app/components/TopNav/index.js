@@ -41,7 +41,8 @@ export default class TopNav extends React.Component {
         />
         <Drawer
           open={this.state.open}
-          onRequestChange={(open) => this.setState({ open })}>
+          onRequestChange={(open) => this.setState({ open })}
+        >
           <Subheader>Groups</Subheader>
           <MenuItem onTouchTap={this.handleClose}>
             Tahoe
